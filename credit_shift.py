@@ -17,7 +17,6 @@ import math
 from sklearn.ensemble import RandomForestClassifier
 
 
-
 def load_data(transactions_path: str, users_path: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """Load transactions and users CSVs and return (tx, users)."""
     tx = pd.read_csv(transactions_path)
@@ -181,16 +180,26 @@ def train_default_model(train_df: pd.DataFrame):
        ]
     )
 
+    rf_params = {
+        "n_estimators": 300,
+        "max_depth": 4,
+        "min_samples_leaf": 150,
+        "max_features": "sqrt",
+        "random_state": 3,
+    }
+
     params = {
     "n_estimators": 100,
     "max_depth": 2,
-    "subsample": 0.6,
+    "subsample": 0.5,
     "learning_rate": 0.01,
     "min_samples_leaf": 100,
     "random_state": 3,
     }
     # model = ensemble.GradientBoostingClassifier(**params)
-    model = Pipeline(steps=[('preprocessor', process), ('classifier', ensemble.GradientBoostingClassifier(**params))])
+    # model = Pipeline(steps=[('preprocessor', process), ('classifier', ensemble.GradientBoostingClassifier(**params))])
+    model = Pipeline(steps=[('preprocessor', process), ('classifier', ensemble.RandomForestClassifier(**rf_params))])
+
     model.fit(X, y)
 
 
@@ -403,4 +412,3 @@ def stress_test_cohort_mix(
         })
     
     return pd.DataFrame(rows)
-    
