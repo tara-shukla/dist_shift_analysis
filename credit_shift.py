@@ -181,21 +181,21 @@ def train_default_model(train_df: pd.DataFrame):
     )
 
     rf_params = {
-        "n_estimators": 300,
+        "n_estimators": 600,
         "max_depth": 4,
-        "min_samples_leaf": 150,
+        "min_samples_leaf": 200,
         "max_features": "sqrt",
         "random_state": 3,
     }
 
-    params = {
-    "n_estimators": 100,
-    "max_depth": 2,
-    "subsample": 0.5,
-    "learning_rate": 0.01,
-    "min_samples_leaf": 100,
-    "random_state": 3,
-    }
+    # params = {
+    # "n_estimators": 100,
+    # "max_depth": 2,
+    # "subsample": 0.5,
+    # "learning_rate": 0.01,
+    # "min_samples_leaf": 200,
+    # "random_state": 3,
+    # }
     # model = ensemble.GradientBoostingClassifier(**params)
     # model = Pipeline(steps=[('preprocessor', process), ('classifier', ensemble.GradientBoostingClassifier(**params))])
     model = Pipeline(steps=[('preprocessor', process), ('classifier', ensemble.RandomForestClassifier(**rf_params))])
